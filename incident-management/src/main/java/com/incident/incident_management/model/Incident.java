@@ -33,6 +33,11 @@ public class Incident {
     @Column(columnDefinition = "TEXT")
     private String rootCause;
 
+    @Column(columnDefinition = "TEXT")
+    private String suggestedPlaybook;
+
+    private String confidenceScore;
+
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -45,5 +50,22 @@ public class Incident {
     @PreUpdate
     protected void onUpdate() {
         this.updatedAt = LocalDateTime.now();
+    }
+
+    // Getters and Setters
+    public String getSuggestedPlaybook() {
+        return suggestedPlaybook;
+    }
+
+    public void setSuggestedPlaybook(String suggestedPlaybook) {
+        this.suggestedPlaybook = suggestedPlaybook;
+    }
+
+    public String getConfidenceScore() {
+        return confidenceScore;
+    }
+
+    public void setConfidenceScore(String confidenceScore) {
+        this.confidenceScore = confidenceScore;
     }
 }

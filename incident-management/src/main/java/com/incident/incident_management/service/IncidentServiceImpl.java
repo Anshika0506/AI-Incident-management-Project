@@ -9,6 +9,7 @@ import com.incident.incident_management.model.LogEntry;
 import com.incident.incident_management.repository.IncidentRepository;
 import com.incident.incident_management.repository.LogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -62,15 +63,25 @@ public class IncidentServiceImpl implements IncidentService {
         return mapToResponse(updatedIncident);
     }
 
-    // AI RAG Analysis Implementation
+    // AI RAG Analysis with Cache-Aside Pattern
+    @Cacheable(value = "incidentAnalysis", key = "#id")
     @Override
     public AnalysisResponse analyzeIncident(Long id) {
+        System.out.println(">>> [CACHE MISS] Fetching fresh Gemini AI RAG analysis for Incident ID: " + id);
+
         Incident incident = incidentRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Incident not found with ID: " + id));
 
         List<LogEntry> logs = logRepository.findByIncidentIdOrderByTimestampDesc(id);
 
-        return aiService.analyzeIncident(incident, logs);
+        AnalysisResponse analysisResponse = aiService.analyzeIncident(incident, logs);
+
+        incident.setRootCause(analysisResponse.getRootCause());
+        incident.setSuggestedPlaybook(analysisResponse.getSuggestedPlaybook());
+        incident.setConfidenceScore(analysisResponse.getConfidenceScore());
+        incidentRepository.save(incident);
+
+        return analysisResponse;
     }
 
     // Helper method: Entity to DTO mapping
@@ -81,6 +92,11 @@ public class IncidentServiceImpl implements IncidentService {
         response.setDescription(incident.getDescription());
         response.setSeverity(incident.getSeverity());
         response.setStatus(incident.getStatus());
+        response.setRootCause(incident.getRootCause());
+        response.setSuggestedPlaybook(incident.getSuggestedPlaybook());
+        response.setConfidenceScore(incident.getConfidenceScore());
+        response.setCreatedAt(incident.getCreatedAt());
+        response.setUpdatedAt(incident.getUpdatedAt());
         return response;
     }
 }

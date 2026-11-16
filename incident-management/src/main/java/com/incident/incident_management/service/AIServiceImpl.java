@@ -1,18 +1,33 @@
 package com.incident.incident_management.service;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.incident.incident_management.dto.AnalysisResponse;
 import com.incident.incident_management.model.Incident;
 import com.incident.incident_management.model.LogEntry;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClient;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class AIServiceImpl implements AIService {
 
+    @Value("${gemini.api.key}")
+    private String geminiApiKey;
+
+    @Value("${gemini.api.url}")
+    private String geminiApiUrl;
+
+    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final RestClient restClient = RestClient.create();
+
     @Override
     public AnalysisResponse analyzeIncident(Incident incident, List<LogEntry> logs) {
-
+        // 1. Format logs for RAG context
         StringBuilder logsText = new StringBuilder();
         if (logs != null && !logs.isEmpty()) {
             for (LogEntry log : logs) {
@@ -21,31 +36,78 @@ public class AIServiceImpl implements AIService {
                         .append("\n");
             }
         } else {
-            logsText.append("No specific raw logs attached.");
+            logsText.append("No specific logs provided.");
         }
 
-        // Step 2: RAG Prompt Construct (Augment)
+        // 2. RAG Prompt Engineering
         String prompt = buildRAGPrompt(incident, logsText.toString());
 
-        System.out.println("--- GENERATED RAG PROMPT ---");
-        System.out.println(prompt);
+        try {
+            // 3. Gemini Request Payload
+            Map<String, Object> requestBody = Map.of(
+                    "contents", List.of(
+                            Map.of("parts", List.of(Map.of("text", prompt)))
+                    )
+            );
 
-        // Step 3: Mock AI Response (Jab tak LLM API Key configure nahi karte)
-        // Generation Result
-        AnalysisResponse response = new AnalysisResponse();
-        response.setRootCause("High Memory & DB Connection Timeout detected in logs.");
-        response.setConfidenceScore("92%");
-        response.setSuggestedPlaybook("1. Restart payment-service pod.\n2. Increase Hikari pool size to 50.\n3. Check unclosed DB connections.");
+            // 4. Calling Google Gemini API
+            String endpoint = geminiApiUrl + "?key=" + geminiApiKey;
 
-        return response;
+            String responseString = restClient.post()
+                    .uri(endpoint)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(requestBody)
+                    .retrieve()
+                    .body(String.class);
+
+            // 5. Parse Gemini Response
+            JsonNode rootNode = objectMapper.readTree(responseString);
+            String aiRawText = rootNode.path("candidates")
+                    .get(0)
+                    .path("content")
+                    .path("parts")
+                    .get(0)
+                    .path("text")
+                    .asText();
+
+            // Extract JSON from markdown backticks if returned
+            aiRawText = aiRawText.replaceAll("```json", "").replaceAll("```", "").trim();
+
+            JsonNode parsedJson = objectMapper.readTree(aiRawText);
+
+            AnalysisResponse analysisResponse = new AnalysisResponse();
+            analysisResponse.setRootCause(parsedJson.path("rootCause").asText());
+            analysisResponse.setConfidenceScore(parsedJson.path("confidenceScore").asText());
+
+            // Handle playbook whether it is a String or an Array
+            JsonNode playbookNode = parsedJson.path("suggestedPlaybook");
+            if (playbookNode.isArray()) {
+                StringBuilder sb = new StringBuilder();
+                for (JsonNode step : playbookNode) {
+                    sb.append(step.asText()).append("\n");
+                }
+                analysisResponse.setSuggestedPlaybook(sb.toString().trim());
+            } else {
+                analysisResponse.setSuggestedPlaybook(playbookNode.asText());
+            }
+
+            return analysisResponse;
+
+        } catch (Exception e) {
+            System.err.println("Gemini API Error: " + e.getMessage());
+            AnalysisResponse fallback = new AnalysisResponse();
+            fallback.setRootCause("AI Analysis Service Temporary Issue: " + e.getMessage());
+            fallback.setConfidenceScore("N/A");
+            fallback.setSuggestedPlaybook("Please review the logs manually.");
+            return fallback;
+        }
     }
 
-    // Helper Method to build RAG Prompt
     private String buildRAGPrompt(Incident incident, String logsText) {
-        return "SYSTEM: You are an Incident Management AI Expert.\n" +
+        return "You are an expert SRE / DevOps Incident Intelligence AI.\n" +
+                "Analyze this production incident and return ONLY a valid JSON object (no markdown, no other text) with keys: 'rootCause', 'confidenceScore', and 'suggestedPlaybook'.\n\n" +
                 "INCIDENT TITLE: " + incident.getTitle() + "\n" +
                 "DESCRIPTION: " + incident.getDescription() + "\n" +
-                "RAW LOGS:\n" + logsText + "\n" +
-                "TASK: Analyze the root cause and provide actionable resolution steps.";
+                "LOGS:\n" + logsText + "\n";
     }
 }

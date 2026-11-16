@@ -18,6 +18,25 @@ public class IncidentResponse {
     private Severity severity;
     private IncidentStatus status;
     private String rootCause;
+    private String suggestedPlaybook;
+    private String confidenceScore;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+    // Getters and Setters
+    public String getSuggestedPlaybook() {
+        return suggestedPlaybook;
+    }
+
+    public void setSuggestedPlaybook(String suggestedPlaybook) {
+        this.suggestedPlaybook = suggestedPlaybook;
+    }
+
+    public String getConfidenceScore() {
+        return confidenceScore;
+    }
+
+    public void setConfidenceScore(String confidenceScore) {
+        this.confidenceScore = confidenceScore;
+    }
 }

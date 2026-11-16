@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2026-11-15T18:00:00.000Z" agent="Mozilla/5.0" version="24.7.7" type="device">
+  <!-- PAGE 1: FULL SYSTEM ARCHITECTURE -->
+  <diagram id="page-1" name="1. Full System Architecture">
+    <mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1650" pageHeight="1100" background="#0F172A" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Title Header -->
+        <mxCell id="title_1" value="AegisOps AI — Full-Stack SRE Incident Intelligence &amp; RAG Architecture" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#F8FAFC;fontSize=22;fontStyle=1;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="350" y="20" width="950" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="subtitle_1" value="End-to-End Component Interaction: React 19 SPA ↔ Spring Boot 3.2 Backend ↔ Google Gemini 3.5 Flash ↔ MySQL / In-Memory Cache" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#94A3B8;fontSize=13;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="350" y="55" width="950" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- CONTAINER 1: FRONTEND LAYER -->
+        <mxCell id="box_fe" value="FRONTEND CLIENT LAYER (React 19 + Vite 8 + Tailwind CSS) [Port 5173]" style="swimlane;whiteSpace=wrap;html=1;fillColor=#1E293B;strokeColor=#38BDF8;fontColor=#38BDF8;fontStyle=1;fontSize=14;rounded=1;arcSize=6;startSize=35;" vertex="1" parent="1">
+          <mxGeometry x="40" y="110" width="360" height="880" as="geometry" />
+        </mxCell>
+        <mxCell id="fe_1" value="&lt;b&gt;SRE Dashboard (App.jsx)&lt;/b&gt;&lt;br&gt;Main State Orchestrator &amp;amp; Health Polling" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F172A;strokeColor=#475569;fontColor=#F8FAFC;fontSize=12;" vertex="1" parent="box_fe">
+          <mxGeometry x="25" y="55" width="310" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="fe_2" value="&lt;b&gt;MetricsBar Component&lt;/b&gt;&lt;br&gt;Live KPIs: Total Incidents, Active P1/P2, RAG Rate, MTTR" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F172A;strokeColor=#475569;fontColor=#F8FAFC;fontSize=11;" vertex="1" parent="box_fe">
+          <mxGeometry x="25" y="130" width="310" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="fe_3" value="&lt;b&gt;IncidentList Component&lt;/b&gt;&lt;br&gt;Search Queue, Severity Badges &amp;amp; Segmented Filters" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F172A;strokeColor=#475569;fontColor=#F8FAFC;fontSize=11;" vertex="1" parent="box_fe">
+          <mxGeometry x="25" y="200" width="310" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="fe_4" value="&lt;b&gt;IncidentDetail Component&lt;/b&gt;&lt;br&gt;Master-Detail View &amp;amp; Lifecycle Status Dropdown" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F172A;strokeColor=#475569;fontColor=#F8FAFC;fontSize=11;" vertex="1" parent="box_fe">
+          <mxGeometry x="25" y="270" width="310" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="fe_5" value="&lt;b&gt;AIDiagnosis Component&lt;/b&gt;&lt;br&gt;RCA Card, Confidence Gauge &amp;amp; Interactive Playbook" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E1B4B;strokeColor=#818CF8;fontColor=#E0E7FF;fontSize=11;" vertex="1" parent="box_fe">
+          <mxGeometry x="25" y="340" width="310" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="fe_6" value="&lt;b&gt;LogStream Terminal Component&lt;/b&gt;&lt;br&gt;Live Telemetry Terminal, Stack Traces &amp;amp; Log Filters" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#022C22;strokeColor=#34D399;fontColor=#D1FAE5;fontSize=11;" vertex="1" parent="box_fe">
+          <mxGeometry x="25" y="415" width="310" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="fe_7" value="&lt;b&gt;Failure Topology Component&lt;/b&gt;&lt;br&gt;Microservice Dependency Failure Graph" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F172A;strokeColor=#475569;fontColor=#F8FAFC;fontSize=11;" vertex="1" parent="box_fe">
+          <mxGeometry x="25" y="490" width="310" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="fe_8" value="&lt;b&gt;IncidentTimeline Component&lt;/b&gt;&lt;br&gt;Chronological Event Audit Trail" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F172A;strokeColor=#475569;fontColor=#F8FAFC;fontSize=11;" vertex="1" parent="box_fe">
+          <mxGeometry x="25" y="560" width="310" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="fe_9" value="&lt;b&gt;1-Click Outage Simulator Modal&lt;/b&gt;&lt;br&gt;HikariCP, Redis Split-Brain, Kafka Lag Presets" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#451A03;strokeColor=#F59E0B;fontColor=#FEF3C7;fontSize=11;" vertex="1" parent="box_fe">
+          <mxGeometry x="25" y="630" width="310" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="fe_10" value="&lt;b&gt;Axios API Client Layer (client.js)&lt;/b&gt;&lt;br&gt;Bearer Interceptor, 45s AI Timeout &amp;amp; Error Handling" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#312E81;strokeColor=#A5B4FC;fontColor=#EEF2FF;fontSize=11;" vertex="1" parent="box_fe">
+          <mxGeometry x="25" y="700" width="310" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="fe_11" value="&lt;b&gt;Vite Reverse Proxy (vite.config.js)&lt;/b&gt;&lt;br&gt;Routes /api requests to http://localhost:8080" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F172A;strokeColor=#38BDF8;fontColor=#BAE6FD;fontSize=11;" vertex="1" parent="box_fe">
+          <mxGeometry x="25" y="775" width="310" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- CONTAINER 2: REVERSE PROXY / INGESTION STREAM -->
+        <mxCell id="box_ext" value="EXTERNAL OBSERVABILITY SOURCES" style="swimlane;whiteSpace=wrap;html=1;fillColor=#1E293B;strokeColor=#A855F7;fontColor=#C084FC;fontStyle=1;fontSize=13;rounded=1;startSize=30;" vertex="1" parent="1">
+          <mxGeometry x="460" y="110" width="320" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="ext_1" value="&lt;b&gt;Production Microservices&lt;/b&gt;&lt;br&gt;Payment, Order, Auth, Catalog" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F172A;strokeColor=#6B21A8;fontColor=#F3E8FF;fontSize=11;" vertex="1" parent="box_ext">
+          <mxGeometry x="20" y="45" width="280" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="ext_2" value="&lt;b&gt;Telemetry Logger / Interceptor&lt;/b&gt;&lt;br&gt;Global Error Handler / Logback Appender" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F172A;strokeColor=#6B21A8;fontColor=#F3E8FF;fontSize=11;" vertex="1" parent="box_ext">
+          <mxGeometry x="20" y="105" width="280" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="ext_3" value="&lt;b&gt;HTTP POST /api/v1/logs&lt;/b&gt;&lt;br&gt;Payload: incidentId, level, service, message, stackTrace" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#581C87;strokeColor=#E9D5FF;fontColor=#FFFFFF;fontSize=10;" vertex="1" parent="box_ext">
+          <mxGeometry x="20" y="165" width="280" height="45" as="geometry" />
+        </mxCell>
+
+        <!-- CONTAINER 3: SPRING BOOT 3.2 BACKEND (PORT 8080) -->
+        <mxCell id="box_be" value="ENTERPRISE BACKEND ARCHITECTURE (Spring Boot 3.2.5 + Java 22) [Port 8080]" style="swimlane;whiteSpace=wrap;html=1;fillColor=#1E293B;strokeColor=#818CF8;fontColor=#818CF8;fontStyle=1;fontSize=14;rounded=1;arcSize=6;startSize=35;" vertex="1" parent="1">
+          <mxGeometry x="840" y="110" width="460" height="880" as="geometry" />
+        </mxCell>
+
+        <!-- Security Boundary -->
+        <mxCell id="be_sec" value="&lt;b&gt;1. Security Filter Chain (SecurityConfig.java)&lt;/b&gt;&lt;br&gt;• Stateless Session (SessionCreationPolicy.STATELESS)&lt;br&gt;• AuthTokenFilter (OncePerRequestFilter - JWT Bearer extraction)&lt;br&gt;• BCryptPasswordEncoder (cost 10) &amp;amp; CorsConfigurationSource" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E1B4B;strokeColor=#6366F1;fontColor=#E0E7FF;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="box_be">
+          <mxGeometry x="25" y="50" width="410" height="75" as="geometry" />
+        </mxCell>
+
+        <!-- Controller Layer -->
+        <mxCell id="be_ctrl" value="&lt;b&gt;2. Controller REST API Layer (@RestController, @Validated)&lt;/b&gt;&lt;br&gt;• IncidentController: /api/v1/incidents (CRUD, /status, /analyze)&lt;br&gt;• LogController: /api/v1/logs (Ingest &amp;amp; /incident/{id})&lt;br&gt;• AuthController: /api/auth (Login &amp;amp; Register)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F172A;strokeColor=#475569;fontColor=#F8FAFC;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="box_be">
+          <mxGeometry x="25" y="145" width="410" height="75" as="geometry" />
+        </mxCell>
+
+        <!-- Service Layer -->
+        <mxCell id="be_svc" value="&lt;b&gt;3. Core Service Layer (@Service)&lt;/b&gt;&lt;br&gt;• IncidentServiceImpl: Business Logic, State Workflow &amp;amp; DTO Mapping&lt;br&gt;• LogServiceImpl: Foreign Key Verification &amp;amp; Chronological Queries&lt;br&gt;• AIServiceImpl: RAG Prompt Assembler &amp;amp; Gemini RestClient Client" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F172A;strokeColor=#475569;fontColor=#F8FAFC;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="box_be">
+          <mxGeometry x="25" y="240" width="410" height="75" as="geometry" />
+        </mxCell>
+
+        <!-- Cache Layer -->
+        <mxCell id="be_cache" value="&lt;b&gt;4. Cache-Aside Acceleration Layer (@EnableCaching)&lt;/b&gt;&lt;br&gt;• @Cacheable(value = &quot;incidentAnalysis&quot;, key = &quot;#id&quot;)&lt;br&gt;• Cache Miss: Queries DB, calls Gemini AI (~3.5s), populates cache&lt;br&gt;• Cache Hit: Instant in-memory RAM / Redis return in &amp;lt; 5 milliseconds" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#451A03;strokeColor=#F59E0B;fontColor=#FEF3C7;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="box_be">
+          <mxGeometry x="25" y="335" width="410" height="75" as="geometry" />
+        </mxCell>
+
+        <!-- RAG Engine Details -->
+        <mxCell id="be_rag" value="&lt;b&gt;5. RAG Intelligence Pipeline (AIServiceImpl.java)&lt;/b&gt;&lt;br&gt;• Context Retrieval: Pulls associated incident logs &amp;amp; stack traces&lt;br&gt;• Prompt Augmentation: Structured SRE system prompt template&lt;br&gt;• RestClient Request: Low temperature (0.2) to eliminate hallucinations&lt;br&gt;• Structured JSON Extraction: rootCause, confidenceScore, suggestedPlaybook" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#022C22;strokeColor=#10B981;fontColor=#D1FAE5;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="box_be">
+          <mxGeometry x="25" y="430" width="410" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- Repository Layer -->
+        <mxCell id="be_repo" value="&lt;b&gt;6. Repository Layer (Spring Data JPA / Hibernate)&lt;/b&gt;&lt;br&gt;• IncidentRepository extends JpaRepository&amp;lt;Incident, Long&amp;gt;&lt;br&gt;• LogRepository: findByIncidentIdOrderByTimestampDesc(id)&lt;br&gt;• UserRepository: findByUsername(username)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F172A;strokeColor=#475569;fontColor=#F8FAFC;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="box_be">
+          <mxGeometry x="25" y="540" width="410" height="75" as="geometry" />
+        </mxCell>
+
+        <!-- Connection Pool -->
+        <mxCell id="be_hikari" value="&lt;b&gt;7. HikariCP High-Performance JDBC Connection Pool&lt;/b&gt;&lt;br&gt;Maintains reusable connection threads to prevent DB exhaustion" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#172554;strokeColor=#3B82F6;fontColor=#DBEAFE;fontSize=11;" vertex="1" parent="box_be">
+          <mxGeometry x="25" y="635" width="410" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Fault Tolerance -->
+        <mxCell id="be_deg" value="&lt;b&gt;8. Graceful Degradation &amp;amp; Resilience Boundary&lt;/b&gt;&lt;br&gt;try-catch fallback catches 429 quota / 503 errors with zero 500 crashes" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#3F1D38;strokeColor=#EC4899;fontColor=#FCE7F3;fontSize=11;" vertex="1" parent="box_be">
+          <mxGeometry x="25" y="705" width="410" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- DTO Decoupling -->
+        <mxCell id="be_dto" value="&lt;b&gt;9. DTO Network Contract Validation Layer&lt;/b&gt;&lt;br&gt;CreateIncidentRequest, IngestLogRequest, AnalysisResponse, JwtResponse" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F172A;strokeColor=#475569;fontColor=#F8FAFC;fontSize=11;" vertex="1" parent="box_be">
+          <mxGeometry x="25" y="775" width="410" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- CONTAINER 4: PERSISTENCE & AI CLOUD -->
+        <mxCell id="box_data" value="PERSISTENCE &amp; CLOUD AI SERVICES" style="swimlane;whiteSpace=wrap;html=1;fillColor=#1E293B;strokeColor=#34D399;fontColor=#6EE7B7;fontStyle=1;fontSize=13;rounded=1;startSize=30;" vertex="1" parent="1">
+          <mxGeometry x="1360" y="110" width="250" height="880" as="geometry" />
+        </mxCell>
+
+        <mxCell id="db_h2" value="&lt;b&gt;H2 In-Memory DB&lt;/b&gt;&lt;br&gt;Development &amp;amp; Viva Mode&lt;br&gt;(jdbc:h2:mem:incidentdb)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#064E3B;strokeColor=#10B981;fontColor=#ECFDF5;fontSize=11;" vertex="1" parent="box_data">
+          <mxGeometry x="30" y="55" width="190" height="95" as="geometry" />
+        </mxCell>
+
+        <mxCell id="db_mysql" value="&lt;b&gt;MySQL 8.0 / Postgres&lt;/b&gt;&lt;br&gt;Production Target DB&lt;br&gt;Full ACID Transactions" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#1E3A8A;strokeColor=#60A5FA;fontColor=#EFF6FF;fontSize=11;" vertex="1" parent="box_data">
+          <mxGeometry x="30" y="180" width="190" height="95" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cache_redis" value="&lt;b&gt;Redis RAM Cache&lt;/b&gt;&lt;br&gt;Sub-5ms Query Speed&lt;br&gt;100% LLM Cost Saved" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#78350F;strokeColor=#F59E0B;fontColor=#FFFBEB;fontSize=11;" vertex="1" parent="box_data">
+          <mxGeometry x="30" y="305" width="190" height="95" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cloud_gemini" value="&lt;b&gt;Google Gemini 3.5 Flash&lt;/b&gt;&lt;br&gt;Cloud Generative AI API&lt;br&gt;&lt;i&gt;gemini-3.5-flash:generateContent&lt;/i&gt;&lt;br&gt;• Temp: 0.2 (Deterministic)&lt;br&gt;• Structured JSON Schema" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#831843;strokeColor=#F43F5E;fontColor=#FFF1F2;fontSize=11;" vertex="1" parent="box_data">
+          <mxGeometry x="30" y="440" width="190" height="110" as="geometry" />
+        </mxCell>
+
+        <mxCell id="table_inc" value="&lt;b&gt;Table: incidents&lt;/b&gt;&lt;br&gt;id (PK), title, description, severity, status, root_cause, playbook, confidence_score, timestamps" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F172A;strokeColor=#475569;fontColor=#CBD5E1;fontSize=10;" vertex="1" parent="box_data">
+          <mxGeometry x="25" y="585" width="200" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="table_logs" value="&lt;b&gt;Table: log_entries&lt;/b&gt;&lt;br&gt;id (PK), incident_id (FK), log_level, source_service, message, stack_trace, timestamp" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F172A;strokeColor=#475569;fontColor=#CBD5E1;fontSize=10;" vertex="1" parent="box_data">
+          <mxGeometry x="25" y="675" width="200" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="table_users" value="&lt;b&gt;Table: users&lt;/b&gt;&lt;br&gt;id (PK), username (UK), email (UK), password (BCrypt), role" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F172A;strokeColor=#475569;fontColor=#CBD5E1;fontSize=10;" vertex="1" parent="box_data">
+          <mxGeometry x="25" y="765" width="200" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- CONNECTIONS / FLOW ARROWS -->
+        <mxCell id="edge_1" value="HTTP REST (JWT Bearer)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#38BDF8;strokeWidth=2;fontColor=#38BDF8;fontSize=11;" edge="1" parent="1" source="fe_10" target="be_sec">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="430" y="835" />
+              <mxPoint x="430" y="200" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="edge_2" value="POST /api/v1/logs" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#C084FC;strokeWidth=2;fontColor=#C084FC;fontSize=11;" edge="1" parent="1" source="ext_3" target="be_ctrl">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge_3" value="Cache-Aside Read/Write" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#F59E0B;strokeWidth=2;fontColor=#F59E0B;fontSize=10;" edge="1" parent="1" source="be_cache" target="cache_redis">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge_4" value="Augmented SRE Prompt (HTTPS POST)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#F43F5E;strokeWidth=2;fontColor=#F43F5E;fontSize=10;" edge="1" parent="1" source="be_rag" target="cloud_gemini">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge_5" value="HikariCP JDBC SQL (JPA/Hibernate)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#60A5FA;strokeWidth=2;fontColor=#60A5FA;fontSize=10;" edge="1" parent="1" source="be_hikari" target="db_mysql">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1330" y="770" />
+              <mxPoint x="1330" y="240" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <!-- PAGE 2: AUTHENTICATION & JWT SECURITY FILTER ARCHITECTURE -->
+  <diagram id="page-2" name="2. Authentication &amp; Security Architecture">
+    <mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1000" background="#0F172A" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="auth_title" value="AegisOps AI — Stateless JWT Authentication &amp; Security Filter Architecture" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#F8FAFC;fontSize=20;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="350" y="20" width="900" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="lane_client" value="CLIENT BROWSER (React 19 / Axios)" style="swimlane;whiteSpace=wrap;html=1;fillColor=#1E293B;strokeColor=#38BDF8;fontColor=#38BDF8;fontStyle=1;fontSize=12;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="50" y="90" width="300" height="800" as="geometry" />
+        </mxCell>
+        <mxCell id="c_1" value="&lt;b&gt;1. User submits credentials&lt;/b&gt;&lt;br&gt;username + password via AuthModal" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F172A;strokeColor=#475569;fontColor=#F8FAFC;fontSize=11;" vertex="1" parent="lane_client">
+          <mxGeometry x="25" y="50" width="250" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="c_2" value="&lt;b&gt;4. Store JWT Token&lt;/b&gt;&lt;br&gt;Persist in localStorage / memory&lt;br&gt;&lt;i&gt;authService.setToken(jwt)&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#064E3B;strokeColor=#10B981;fontColor=#ECFDF5;fontSize=11;" vertex="1" parent="lane_client">
+          <mxGeometry x="25" y="230" width="250" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="c_3" value="&lt;b&gt;5. Subsequent Protected Requests&lt;/b&gt;&lt;br&gt;Axios Request Interceptor attaches:&lt;br&gt;&lt;code&gt;Authorization: Bearer &amp;lt;token&amp;gt;&lt;/code&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E1B4B;strokeColor=#818CF8;fontColor=#E0E7FF;fontSize=11;" vertex="1" parent="lane_client">
+          <mxGeometry x="25" y="340" width="250" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="c_4" value="&lt;b&gt;Logout Action&lt;/b&gt;&lt;br&gt;Removes JWT token, clears Security Context" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#450A0A;strokeColor=#F43F5E;fontColor=#FFE4E6;fontSize=11;" vertex="1" parent="lane_client">
+          <mxGeometry x="25" y="470" width="250" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="lane_filter" value="SPRING SECURITY FILTER CHAIN (OncePerRequestFilter)" style="swimlane;whiteSpace=wrap;html=1;fillColor=#1E293B;strokeColor=#818CF8;fontColor=#818CF8;fontStyle=1;fontSize=12;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="400" y="90" width="370" height="800" as="geometry" />
+        </mxCell>
+        <mxCell id="f_1" value="&lt;b&gt;CORS Filter (CorsConfigurationSource)&lt;/b&gt;&lt;br&gt;Permits http://localhost:5173 origin&lt;br&gt;Allows GET, POST, PATCH, OPTIONS" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F172A;strokeColor=#475569;fontColor=#F8FAFC;fontSize=11;" vertex="1" parent="lane_filter">
+          <mxGeometry x="25" y="50" width="320" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="f_2" value="&lt;b&gt;AuthTokenFilter (Custom Filter)&lt;/b&gt;&lt;br&gt;Intercepts incoming request before DispatcherServlet" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#312E81;strokeColor=#A5B4FC;fontColor=#EEF2FF;fontSize=11;" vertex="1" parent="lane_filter">
+          <mxGeometry x="25" y="140" width="320" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="f_3" value="&lt;b&gt;Parse Authorization Header&lt;/b&gt;&lt;br&gt;Extracts token string following &quot;Bearer &quot;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F172A;strokeColor=#475569;fontColor=#F8FAFC;fontSize=11;" vertex="1" parent="lane_filter">
+          <mxGeometry x="25" y="230" width="320" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="f_4" value="&lt;b&gt;JwtUtils.validateJwtToken()&lt;/b&gt;&lt;br&gt;• Verifies HMAC-SHA256 signature with secret key&lt;br&gt;• Verifies expiration date claim (24-hour validity)&lt;br&gt;• Checks token tampering" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F172A;strokeColor=#475569;fontColor=#F8FAFC;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="lane_filter">
+          <mxGeometry x="25" y="320" width="320" height="75" as="geometry" />
+        </mxCell>
+        <mxCell id="f_5" value="&lt;b&gt;Populate SecurityContextHolder&lt;/b&gt;&lt;br&gt;Loads UsernamePasswordAuthenticationToken&lt;br&gt;Authorizes request to proceed to Controller" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#064E3B;strokeColor=#10B981;fontColor=#ECFDF5;fontSize=11;" vertex="1" parent="lane_filter">
+          <mxGeometry x="25" y="440" width="320" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="f_6" value="&lt;b&gt;Token Invalid / Missing?&lt;/b&gt;&lt;br&gt;Returns HTTP 401 Unauthorized / 403 Forbidden" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#450A0A;strokeColor=#F43F5E;fontColor=#FFE4E6;fontSize=11;" vertex="1" parent="lane_filter">
+          <mxGeometry x="25" y="530" width="320" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="lane_auth" value="AUTH CONTROLLER &amp; SERVICE (Spring Security Core)" style="swimlane;whiteSpace=wrap;html=1;fillColor=#1E293B;strokeColor=#34D399;fontColor=#34D399;fontStyle=1;fontSize=12;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="820" y="90" width="370" height="800" as="geometry" />
+        </mxCell>
+        <mxCell id="a_1" value="&lt;b&gt;2. POST /api/auth/login&lt;/b&gt;&lt;br&gt;AuthenticationManager.authenticate()&lt;br&gt;Verifies username &amp;amp; hashed password" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F172A;strokeColor=#475569;fontColor=#F8FAFC;fontSize=11;" vertex="1" parent="lane_auth">
+          <mxGeometry x="25" y="50" width="320" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="a_2" value="&lt;b&gt;BCryptPasswordEncoder (cost 10)&lt;/b&gt;&lt;br&gt;Compares raw password with $2a$10$ hash in DB" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F172A;strokeColor=#475569;fontColor=#F8FAFC;fontSize=11;" vertex="1" parent="lane_auth">
+          <mxGeometry x="25" y="130" width="320" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="a_3" value="&lt;b&gt;3. JwtUtils.generateJwtToken()&lt;/b&gt;&lt;br&gt;Encodes username, role &amp;amp; 24-hr expiry into HMAC-SHA256 JWT string" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E1B4B;strokeColor=#818CF8;fontColor=#E0E7FF;fontSize=11;" vertex="1" parent="lane_auth">
+          <mxGeometry x="25" y="210" width="320" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="a_4" value="&lt;b&gt;Registration: POST /api/auth/register&lt;/b&gt;&lt;br&gt;Hashes password with BCrypt before DB save" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F172A;strokeColor=#475569;fontColor=#F8FAFC;fontSize=11;" vertex="1" parent="lane_auth">
+          <mxGeometry x="25" y="300" width="320" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="lane_db" value="USER PERSISTENCE (H2 / MySQL)" style="swimlane;whiteSpace=wrap;html=1;fillColor=#1E293B;strokeColor=#F59E0B;fontColor=#F59E0B;fontStyle=1;fontSize=12;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="1240" y="90" width="300" height="800" as="geometry" />
+        </mxCell>
+        <mxCell id="udb_1" value="&lt;b&gt;UserRepository&lt;/b&gt;&lt;br&gt;findByUsername(username)&lt;br&gt;existsByEmail(email)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F172A;strokeColor=#475569;fontColor=#F8FAFC;fontSize=11;" vertex="1" parent="lane_db">
+          <mxGeometry x="25" y="50" width="250" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="udb_2" value="&lt;b&gt;Table: users&lt;/b&gt;&lt;br&gt;• id: BIGINT PRIMARY KEY&lt;br&gt;• username: VARCHAR(50) UNIQUE&lt;br&gt;• email: VARCHAR(100) UNIQUE&lt;br&gt;• password: VARCHAR(255) (BCrypt)&lt;br&gt;• role: VARCHAR(20) (ROLE_SRE)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#172554;strokeColor=#3B82F6;fontColor=#DBEAFE;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="lane_db">
+          <mxGeometry x="25" y="140" width="250" height="130" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <!-- PAGE 3: TELEMETRY LOG INGESTION PIPELINE -->
+  <diagram id="page-3" name="3. Log Ingestion Pipeline">
+    <mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1000" background="#0F172A" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="rag_title" value="AegisOps AI — Real-Time Telemetry Log Ingestion Pipeline Architecture" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#F8FAFC;fontSize=20;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="350" y="20" width="900" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="flow_ingest" value="PHASE A: HIGH-THROUGHPUT LOG INGESTION FLOW" style="swimlane;whiteSpace=wrap;html=1;fillColor=#1E293B;strokeColor=#C084FC;fontColor=#C084FC;fontStyle=1;fontSize=12;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="50" y="90" width="1500" height="360" as="geometry" />
+        </mxCell>
+        <mxCell id="i_1" value="&lt;b&gt;1. Microservice Outage Event&lt;/b&gt;&lt;br&gt;Payment, Auth, or Order service hits exception&lt;br&gt;(e.g. HikariPool-1 exhausted: 20/20)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F172A;strokeColor=#6B21A8;fontColor=#F3E8FF;fontSize=11;" vertex="1" parent="flow_ingest">
+          <mxGeometry x="30" y="50" width="260" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="i_2" value="&lt;b&gt;2. Ingestion Request Trigger&lt;/b&gt;&lt;br&gt;&lt;code&gt;POST /api/v1/logs&lt;/code&gt;&lt;br&gt;Payload: { incidentId, logLevel, sourceService, message, stackTrace }" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#3B0764;strokeColor=#A855F7;fontColor=#F3E8FF;fontSize=11;" vertex="1" parent="flow_ingest">
+          <mxGeometry x="330" y="50" width="280" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="i_3" value="&lt;b&gt;3. LogController &amp;amp; Validation&lt;/b&gt;&lt;br&gt;Validates @Valid IngestLogRequest DTO&lt;br&gt;Routes to LogServiceImpl.ingestLog()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F172A;strokeColor=#475569;fontColor=#F8FAFC;fontSize=11;" vertex="1" parent="flow_ingest">
+          <mxGeometry x="650" y="50" width="260" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="i_4" value="&lt;b&gt;4. Foreign Key Integrity Check&lt;/b&gt;&lt;br&gt;incidentRepository.findById(incidentId)&lt;br&gt;Rejects with HTTP 400 if incident does not exist" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#172554;strokeColor=#3B82F6;fontColor=#DBEAFE;fontSize=11;" vertex="1" parent="flow_ingest">
+          <mxGeometry x="950" y="50" width="250" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="i_5" value="&lt;b&gt;5. Relational Persistence&lt;/b&gt;&lt;br&gt;logRepository.save(logEntry)&lt;br&gt;Saves to MySQL/H2 table log_entries with current timestamp" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#064E3B;strokeColor=#10B981;fontColor=#ECFDF5;fontSize=11;" vertex="1" parent="flow_ingest">
+          <mxGeometry x="1230" y="50" width="240" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="i_note" value="&lt;b&gt;Key Viva Principle:&lt;/b&gt; Logs are never stored orphaned in the database. Every log entry is strictly mapped to an incident_id foreign key, enabling sub-millisecond indexed retrieval during RAG synthesis and live telemetry streaming." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F172A;strokeColor=#475569;fontColor=#94A3B8;fontSize=11;align=left;spacingLeft=15;" vertex="1" parent="flow_ingest">
+          <mxGeometry x="30" y="140" width="1440" height="40" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <!-- PAGE 4: RAG DIAGNOSTIC ENGINE & CACHE-ASIDE -->
+  <diagram id="page-4" name="4. RAG Diagnostic Engine &amp; Cache-Aside">
+    <mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1000" background="#0F172A" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="rag4_title" value="AegisOps AI — Context-Aware RAG Diagnostic Engine &amp; Cache-Aside Architecture" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#F8FAFC;fontSize=20;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="350" y="20" width="900" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="flow_rag4" value="RETRIEVAL-AUGMENTED GENERATION (RAG) &amp; CACHING WORKFLOW (AIServiceImpl.java)" style="swimlane;whiteSpace=wrap;html=1;fillColor=#1E293B;strokeColor=#10B981;fontColor=#10B981;fontStyle=1;fontSize=12;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="50" y="90" width="1500" height="850" as="geometry" />
+        </mxCell>
+        <mxCell id="r4_1" value="&lt;b&gt;1. SRE Triggers Diagnosis&lt;/b&gt;&lt;br&gt;Clicks &quot;Run Gemini Analysis&quot;&lt;br&gt;&lt;code&gt;POST /api/v1/incidents/{id}/analyze&lt;/code&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F172A;strokeColor=#475569;fontColor=#F8FAFC;fontSize=11;" vertex="1" parent="flow_rag4">
+          <mxGeometry x="30" y="55" width="220" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="r4_2" value="&lt;b&gt;2. Check Cache-Aside Layer&lt;/b&gt;&lt;br&gt;@Cacheable(value=&quot;incidentAnalysis&quot;, key=&quot;#id&quot;)&lt;br&gt;Checks in-memory RAM / Redis" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#451A03;strokeColor=#F59E0B;fontColor=#FEF3C7;fontSize=11;" vertex="1" parent="flow_rag4">
+          <mxGeometry x="280" y="55" width="230" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="r4_hit" value="&lt;b&gt;CACHE HIT (&amp;lt; 5ms)&lt;/b&gt;&lt;br&gt;Bypasses LLM call completely&lt;br&gt;0 tokens consumed" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#064E3B;strokeColor=#10B981;fontColor=#ECFDF5;fontSize=11;" vertex="1" parent="flow_rag4">
+          <mxGeometry x="280" y="155" width="230" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="r4_3" value="&lt;b&gt;3. RETRIEVE Context (Cache MISS)&lt;/b&gt;&lt;br&gt;Queries associated logs:&lt;br&gt;&lt;code&gt;logRepository.findByIncidentId(...)&lt;/code&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E1B4B;strokeColor=#818CF8;fontColor=#E0E7FF;fontSize=11;" vertex="1" parent="flow_rag4">
+          <mxGeometry x="540" y="55" width="230" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="r4_4" value="&lt;b&gt;4. AUGMENT SRE Prompt&lt;/b&gt;&lt;br&gt;Injects incident title, severity &amp;amp; error stack traces into structured SRE prompt template" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F172A;strokeColor=#475569;fontColor=#F8FAFC;fontSize=11;" vertex="1" parent="flow_rag4">
+          <mxGeometry x="800" y="55" width="240" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="r4_5" value="&lt;b&gt;5. GENERATE (Gemini API)&lt;/b&gt;&lt;br&gt;Spring 3.2 RestClient calls Gemini 3.5 Flash&lt;br&gt;Low temp (0.2) to eliminate hallucinations" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#831843;strokeColor=#F43F5E;fontColor=#FFF1F2;fontSize=11;" vertex="1" parent="flow_rag4">
+          <mxGeometry x="1070" y="55" width="220" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="r4_6" value="&lt;b&gt;6. Parse, Persist &amp;amp; Cache&lt;/b&gt;&lt;br&gt;Parses rootCause, confidence &amp;amp; playbook&lt;br&gt;Updates DB &amp;amp; stores in Cache for repeat calls" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#064E3B;strokeColor=#10B981;fontColor=#ECFDF5;fontSize=11;" vertex="1" parent="flow_rag4">
+          <mxGeometry x="1320" y="55" width="150" height="65" as="geometry" />
+        </mxCell>
+
+        <mxCell id="r4_json" value="&lt;b&gt;Structured JSON Output Schema Returned by Google Gemini 3.5 Flash:&lt;/b&gt;&lt;br&gt;&lt;pre&gt;{&#xa;  &quot;rootCause&quot;: &quot;HikariCP connection pool exhausted on payment-db-primary. Max pool size (20) saturated due to slow unindexed query on transaction_ledger table.&quot;,&#xa;  &quot;confidenceScore&quot;: &quot;94%&quot;,&#xa;  &quot;suggestedPlaybook&quot;: &quot;1. Scale Hikari connection pool size from 20 to 50 via spring.datasource.hikari.maximum-pool-size=50&#xa;2. Terminate long-running lock queries using pg_terminate_backend / kill query&#xa;3. Add composite index on transaction_ledger (user_id, status, created_at)&#xa;4. Restart payment-service instances in rolling deployment&quot;&#xa;}&lt;/pre&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F172A;strokeColor=#334155;fontColor=#E2E8F0;fontSize=11;align=left;spacingLeft=15;" vertex="1" parent="flow_rag4">
+          <mxGeometry x="30" y="240" width="1440" height="230" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <!-- PAGE 5: FRONTEND COMPONENT HIERARCHY -->
+  <diagram id="page-5" name="5. Frontend Component Hierarchy">
+    <mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1000" background="#0F172A" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="fe5_title" value="AegisOps AI — 3-Page Frontend Component &amp; State Router Architecture" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#F8FAFC;fontSize=20;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="350" y="20" width="900" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="fe5_app" value="&lt;b&gt;App.jsx (Root State Controller &amp;amp; 3-Page Hash Router)&lt;/b&gt;&lt;br&gt;currentPage ('dashboard' | 'incidents' | 'telemetry'), incidents[], logs[], isBackendLive, authUser&lt;br&gt;Synchronizes with URL Hash (#dashboard, #incidents, #telemetry); 30s Polling Health Check" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E1B4B;strokeColor=#818CF8;fontColor=#E0E7FF;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="350" y="80" width="900" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="fe5_nav" value="&lt;b&gt;Navbar.jsx (Primary 3-Page Navigation Bar)&lt;/b&gt;&lt;br&gt;Tabs: [📊 Dashboard] • [🚨 Incidents (with active P1 alert badge)] • [💻 Telemetry &amp;amp; Logs]  |  API 8080 Live pill, User profile, Simulate trigger" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F172A;strokeColor=#38BDF8;fontColor=#F8FAFC;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="100" y="180" width="1400" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- 3 Dedicated Pages -->
+        <mxCell id="fe5_p1" value="&lt;b&gt;PAGE 1: SRE DASHBOARD (src/pages/DashboardPage.jsx)&lt;/b&gt;&lt;br&gt;&lt;hr&gt;• Hero System Health Banner (Operational vs Degraded)&lt;br&gt;• MetricsBar.jsx: Total, Active Critical (P1), AI RAG Rate, MTTR (4.2m)&lt;br&gt;• Microservice Fleet Topology Grid (Payment, Auth, Order, DB, Cache)&lt;br&gt;• Live Incident Triage Table with 1-click &quot;Investigate with AI&quot;&lt;br&gt;• Quick Actions: Simulate Outage, Create Incident, Sync" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E293B;strokeColor=#38BDF8;fontColor=#F8FAFC;fontSize=11;align=left;spacingLeft=12;" vertex="1" parent="1">
+          <mxGeometry x="100" y="270" width="430" height="340" as="geometry" />
+        </mxCell>
+
+        <mxCell id="fe5_p2" value="&lt;b&gt;PAGE 2: INCIDENTS WORKSPACE (src/pages/IncidentsPage.jsx)&lt;/b&gt;&lt;br&gt;&lt;hr&gt;• IncidentList.jsx: Search queue, priority filter pills (ALL, P1/P2, Active)&lt;br&gt;• IncidentDetail.jsx: Status Switcher (OPEN ➔ IN_PROGRESS ➔ RESOLVED)&lt;br&gt;• Tab 1: AIDiagnosis.jsx (Gemini 3.5 Flash RAG, RCA &amp;amp; Checklist Playbook)&lt;br&gt;• Tab 2: LogStream.jsx (Incident Telemetry Terminal &amp;amp; Stack Traces)&lt;br&gt;• Tab 3: IncidentTopology.jsx (Visual Failure Microservice Dependency Map)&lt;br&gt;• Tab 4: IncidentTimeline.jsx (Chronological Milestone Audit Stepper)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E293B;strokeColor=#818CF8;fontColor=#F8FAFC;fontSize=11;align=left;spacingLeft=12;" vertex="1" parent="1">
+          <mxGeometry x="580" y="270" width="450" height="340" as="geometry" />
+        </mxCell>
+
+        <mxCell id="fe5_p3" value="&lt;b&gt;PAGE 3: TELEMETRY LAB (src/pages/TelemetryPage.jsx)&lt;/b&gt;&lt;br&gt;&lt;hr&gt;• Full-Screen SRE Telemetry Console with real-time streaming&lt;br&gt;• Multi-Level Filtering: Log levels (ERROR, WARN, INFO) &amp;amp; Service selector&lt;br&gt;• Collapsible Java Stack Trace Inspector with 1-click copy&lt;br&gt;• Quick Ingest Control Deck: Emit custom telemetry via POST /api/v1/logs&lt;br&gt;• 1-Click Outage Injection (HikariCP, Redis, Kafka lag, JVM heap OOM)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E293B;strokeColor=#34D399;fontColor=#F8FAFC;fontSize=11;align=left;spacingLeft=12;" vertex="1" parent="1">
+          <mxGeometry x="1070" y="270" width="430" height="340" as="geometry" />
+        </mxCell>
+
+        <mxCell id="fe5_api" value="&lt;b&gt;API Client Layer (src/api/client.js, incidentService.js, logService.js, authService.js)&lt;/b&gt;&lt;br&gt;Axios HTTP instance, Bearer JWT Request Interceptor, 45-Second AI Timeout, Global Error Catcher" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F172A;strokeColor=#6366F1;fontColor=#E0E7FF;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="100" y="650" width="1400" height="60" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <!-- PAGE 6: RELATIONAL DATABASE ER SCHEMA -->
+  <diagram id="page-6" name="6. Database ER Schema">
+    <mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1000" background="#0F172A" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="er_title" value="AegisOps AI — Relational Database Entity-Relationship (ER) Schema" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#F8FAFC;fontSize=20;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="350" y="20" width="900" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Table 1: incidents -->
+        <mxCell id="t_inc" value="&lt;b&gt;TABLE: incidents&lt;/b&gt;&lt;br&gt;&lt;hr&gt;• id: BIGINT [PK, AUTO_INCREMENT]&lt;br&gt;• title: VARCHAR(255) [NOT NULL]&lt;br&gt;• description: TEXT&lt;br&gt;• severity: VARCHAR(20) [NOT NULL]&lt;br&gt;• status: VARCHAR(20) [NOT NULL]&lt;br&gt;• root_cause: TEXT&lt;br&gt;• suggested_playbook: TEXT&lt;br&gt;• confidence_score: VARCHAR(10)&lt;br&gt;• created_at: DATETIME [NOT NULL]&lt;br&gt;• updated_at: DATETIME [NOT NULL]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E293B;strokeColor=#38BDF8;fontColor=#F8FAFC;fontSize=11;align=left;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="80" y="100" width="380" height="380" as="geometry" />
+        </mxCell>
+
+        <!-- Table 2: log_entries -->
+        <mxCell id="t_log" value="&lt;b&gt;TABLE: log_entries&lt;/b&gt;&lt;br&gt;&lt;hr&gt;• id: BIGINT [PK, AUTO_INCREMENT]&lt;br&gt;• incident_id: BIGINT [FK -&amp;gt; incidents(id), NOT NULL]&lt;br&gt;• log_level: VARCHAR(10) [NOT NULL]&lt;br&gt;• source_service: VARCHAR(100) [NOT NULL]&lt;br&gt;• message: TEXT [NOT NULL]&lt;br&gt;• stack_trace: LONGTEXT&lt;br&gt;• timestamp: DATETIME [NOT NULL]&lt;br&gt;&lt;i&gt;INDEX idx_inc_id (incident_id)&lt;/i&gt;&lt;br&gt;&lt;i&gt;INDEX idx_ts (timestamp DESC)&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E293B;strokeColor=#C084FC;fontColor=#F8FAFC;fontSize=11;align=left;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="580" y="100" width="420" height="380" as="geometry" />
+        </mxCell>
+
+        <!-- Table 3: users -->
+        <mxCell id="t_usr" value="&lt;b&gt;TABLE: users&lt;/b&gt;&lt;br&gt;&lt;hr&gt;• id: BIGINT [PK, AUTO_INCREMENT]&lt;br&gt;• username: VARCHAR(50) [UNIQUE, NOT NULL]&lt;br&gt;• email: VARCHAR(100) [UNIQUE, NOT NULL]&lt;br&gt;• password: VARCHAR(255) [BCrypt Salted Hash]&lt;br&gt;• role: VARCHAR(20) [NOT NULL, e.g. ROLE_SRE]&lt;br&gt;• created_at: DATETIME [NOT NULL]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E293B;strokeColor=#F59E0B;fontColor=#F8FAFC;fontSize=11;align=left;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="1100" y="100" width="380" height="300" as="geometry" />
+        </mxCell>
+
+        <!-- Relationship Arrow -->
+        <mxCell id="er_rel" value="1 : N (Foreign Key incident_id)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#38BDF8;strokeWidth=3;fontColor=#38BDF8;fontSize=12;" edge="1" parent="1" source="t_inc" target="t_log">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Notes -->
+        <mxCell id="er_guar" value="&lt;b&gt;Relational Integrity &amp;amp; Performance Guarantees:&lt;/b&gt;&lt;br&gt;1. Referential Integrity: Logs are mapped via foreign key constraints, preventing orphaned telemetry records.&lt;br&gt;2. Composite Indexing: Queries sorting logs by timestamp for an incident return in sub-2ms.&lt;br&gt;3. Security Integrity: Passwords stored as one-way salted BCrypt hashes ($2a$10$...), eliminating plain-text credentials." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F172A;strokeColor=#34D399;fontColor=#D1FAE5;fontSize=11;align=left;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="80" y="520" width="1400" height="90" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
