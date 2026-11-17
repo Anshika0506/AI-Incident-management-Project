@@ -175,6 +175,22 @@ ${incident.suggestedPlaybook || 'No playbook steps available.'}
               </div>
             </div>
 
+            {/* Historical Similarity Match Banner */}
+            {incident.similarityScore && (
+              <div className="p-3 rounded-lg bg-indigo-50 border border-indigo-200 text-xs flex items-center justify-between gap-2">
+                <div className="flex items-center gap-2">
+                  <Sparkles className="w-4 h-4 text-indigo-600 flex-shrink-0" />
+                  <span className="text-slate-800">
+                    <strong className="text-indigo-900 font-semibold">Historical Pattern Matched:</strong> {incident.similarityScore}
+                    {incident.similarIncidentTitle ? ` with "${incident.similarIncidentTitle}"` : ''}
+                  </span>
+                </div>
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-indigo-100 text-indigo-800 font-semibold uppercase tracking-wider">
+                  Reused Playbook
+                </span>
+              </div>
+            )}
+
             {/* Root Cause Details */}
             <div className="p-4 rounded-lg bg-slate-50 border border-slate-200 text-xs sm:text-sm text-slate-800 leading-relaxed font-sans">
               {incident.rootCause}

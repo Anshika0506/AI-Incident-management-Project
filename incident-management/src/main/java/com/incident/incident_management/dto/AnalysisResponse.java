@@ -16,5 +16,8 @@ public class AnalysisResponse implements Serializable {
     private String rootCause;
     private String confidenceScore;
     private String suggestedPlaybook;
+    private String similarityScore;
+    private Long similarIncidentId;
+    private String similarIncidentTitle;
 
 }

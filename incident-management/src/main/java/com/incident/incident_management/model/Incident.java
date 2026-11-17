@@ -38,6 +38,10 @@ public class Incident {
 
     private String confidenceScore;
 
+    private String similarityScore;
+    private Long similarIncidentId;
+    private String similarIncidentTitle;
+
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
