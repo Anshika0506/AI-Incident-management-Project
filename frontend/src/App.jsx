@@ -263,13 +263,43 @@ export default function App() {
         }
       }
 
-      // Simulated Demo Mode (Simulates sub-2s AI RAG inference)
-      await new Promise(r => setTimeout(r, 1600));
+      // Smart Dynamic Simulation Generator based on Incident Title & Context
+      await new Promise(r => setTimeout(r, 1500));
+
+      const titleLower = (selectedIncident?.title || '').toLowerCase();
+      const descLower = (selectedIncident?.description || '').toLowerCase();
+      const textToMatch = `${titleLower} ${descLower}`;
+
+      let dynamicRCA = '';
+      let dynamicPlaybook = '';
+      let dynamicScore = '94%';
+
+      if (textToMatch.includes('auth') || textToMatch.includes('jwt') || textToMatch.includes('login') || textToMatch.includes('401') || textToMatch.includes('token') || textToMatch.includes('session') || textToMatch.includes('permission')) {
+        dynamicRCA = 'Redis session token cache cluster partition timeout. auth-service unable to validate Bearer tokens, resulting in cascading HTTP 401 Unauthorized errors and gateway thread backpressure.';
+        dynamicPlaybook = '1. Force Redis Sentinel failover reconciliation.\n2. Invalidate corrupted token cache keys via FLUSHDB on node-replica-02.\n3. Verify auth-service reconnection to active Redis master.\n4. Reset circuit breaker for downstream API gateway.';
+        dynamicScore = '96%';
+      } else if (textToMatch.includes('kafka') || textToMatch.includes('order') || textToMatch.includes('queue') || textToMatch.includes('lag') || textToMatch.includes('consumer') || textToMatch.includes('event')) {
+        dynamicRCA = 'Kafka partition lag on topic order.events exceeded 150,000 records. Deadlock in inventory-reservation consumer group caused by duplicate order IDs emitted during retry storm.';
+        dynamicPlaybook = '1. Increase consumer concurrency from 4 to 16.\n2. Enable idempotent consumer processing with deduplication cache in Redis.\n3. Replay dead letter queue (DLQ) messages with exponential backoff.\n4. Verify lag drops below 500 msgs.';
+        dynamicScore = '92%';
+      } else if (textToMatch.includes('memory') || textToMatch.includes('heap') || textToMatch.includes('oom') || textToMatch.includes('gc') || textToMatch.includes('leak')) {
+        dynamicRCA = 'JVM Metaspace and OldGen heap saturation (98.4% utilized). Frequent Stop-The-World full GC pauses causing HTTP 504 gateway timeouts across microservice fleet.';
+        dynamicPlaybook = '1. Capture heap dump via jcmd <pid> GC.heap_dump.\n2. Increase JVM heap container flags: -Xmx4g -Xms2g.\n3. Terminate runaway report generator threads.\n4. Perform rolling restart of affected service pod.';
+        dynamicScore = '95%';
+      } else if (textToMatch.includes('network') || textToMatch.includes('dns') || textToMatch.includes('socket') || textToMatch.includes('502') || textToMatch.includes('503') || textToMatch.includes('gateway') || textToMatch.includes('ingress')) {
+        dynamicRCA = 'Ingress controller upstream socket timeout. Envoy proxy connection pool to checkout-service saturated due to HTTP keep-alive exhaustion during traffic surge.';
+        dynamicPlaybook = '1. Reload Ingress Nginx configuration: nginx -s reload.\n2. Scale Envoy sidecar proxy connection limit from 1024 to 4096.\n3. Flush local CoreDNS cache across Kubernetes worker nodes.\n4. Verify ingress latency returns to < 20ms.';
+        dynamicScore = '91%';
+      } else {
+        dynamicRCA = `Database connection pool exhaustion observed on ${selectedIncident?.title || 'payment-service'}. HikariCP max pool size (20) saturated due to slow unindexed queries on transaction_ledger acquiring table-level locks.`;
+        dynamicPlaybook = '1. Scale Hikari connection pool size from 20 to 50 via spring.datasource.hikari.maximum-pool-size=50.\n2. Terminate long-running lock queries using pg_terminate_backend / kill query.\n3. Add missing composite index on transaction_ledger (user_id, status, created_at).\n4. Restart payment-service instances in rolling deployment.';
+        dynamicScore = '94%';
+      }
 
       const simulatedAnalysis = {
-        rootCause: 'Connection pool timeout observed on payment-service. HikariCP max pool size (20) saturated due to slow unindexed queries on checkout tables.',
-        suggestedPlaybook: '1. Scale Hikari connection pool size from 20 to 50 via spring.datasource.hikari.maximum-pool-size=50.\n2. Terminate long-running lock queries using pg_terminate_backend / kill query.\n3. Add missing composite index on transaction_ledger (user_id, status, created_at).\n4. Restart payment-service instances in rolling deployment.',
-        confidenceScore: '94%'
+        rootCause: dynamicRCA,
+        suggestedPlaybook: dynamicPlaybook,
+        confidenceScore: dynamicScore
       };
 
       const updatedIncident = {
